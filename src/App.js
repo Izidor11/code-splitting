@@ -14,7 +14,7 @@ class App extends React.Component {
 
   //arrow func, so we dont have to bind in constructor
   onRouteChange = (route) => {
-    this.setSate({
+    this.setState({
       route: route,
     });
   };
