@@ -1,24 +1,25 @@
 import React from 'react';
 import './App.css';
 import Page1 from './components/Page1';
-//import Page2 from './components/Page2';
-//import Page3 from './components/Page3';
+import AsyncComponent from './components/AsyncComponent';
 
+//components are object so.. null
 class App extends React.Component {
   constructor() {
     super();
     this.state = {
       route: 'page1',
-      component: '',
+      component: null,
     };
   }
 
   //arrow func, so we dont have to bind in constructor
   onRouteChange = (route) => {
-    /*this.setState({
+    this.setState({
       route: route,
     });
-    */
+  };
+  /*
     //With Code splitting
     if (route === 'page1') {
       this.setState({ route: route });
@@ -33,12 +34,17 @@ class App extends React.Component {
       });
     }
   };
+  */
 
   render() {
     if (this.state.route === 'page1') {
       return <Page1 onRouteChange={this.onRouteChange} />;
-    } else {
-      return <this.state.component onRouteChange={this.onRouteChange} />;
+    } else if (this.state.route === 'page2') {
+      const AsyncPage2 = AsyncComponent(() => import('./components/Page2'));
+      return <AsyncPage2 onRouteChange={this.onRouteChange} />;
+    } else if (this.state.route === 'page3') {
+      const AsyncPage3 = AsyncComponent(() => import('./components/Page3'));
+      return <AsyncPage3 onRouteChange={this.onRouteChange} />;
     }
   }
 }
